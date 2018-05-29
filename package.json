@@ -1,0 +1,16 @@
+{
+  "name": "@creditkarma/feature-flags",
+  "version": "0.0.0",
+  "description": "A dynamic feature flags library for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Credit Karma",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  }
+}
