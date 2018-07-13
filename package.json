@@ -4,13 +4,34 @@
   "description": "A dynamic feature flags library for Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist/",
+    "clean-all": "rimraf dist/ node_modules/ package-lock.json",
+    "docker": "docker-compose up --force-recreate &",
+    "docker:kill": "docker-compose kill",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "precopy-test-config": "rimraf dist/tests/integration/config",
+    "copy-test-config": "cp -r src/tests/integration/config dist/tests/integration/config",
+    "pretest": "npm run docker:kill && npm run build && npm run copy-test-config",
+    "test": "npm run test:integration",
+    "pretest:integration": "npm run docker",
+    "test:integration": "wait-on --timeout 20000 http://localhost:8510 && node dist/tests/integration/bootstrap.js && CONSUL_ADDRESS='http://localhost:8510' CONSUL_DC='dc1' CONFIG_PATH='dist/tests/integration/config' lab --timeout 15000 --verbose -l -S -P spec dist/tests/integration",
+    "posttest:integration": "npm run docker:kill"
   },
   "author": "Credit Karma",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@creditkarma/dynamic-config": "^0.7.1",
+    "@types/code": "^4.0.4",
+    "@types/lab": "^11.1.0",
+    "code": "^4.1.0",
+    "lab": "^14.3.1",
     "rimraf": "^2.6.2",
     "tslint": "^5.10.0",
-    "typescript": "^2.8.3"
+    "typescript": "2.9.x",
+    "wait-on": "^2.1.0"
+  },
+  "dependencies": {
+    "ajv": "^6.5.0"
   }
 }
