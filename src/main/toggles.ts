@@ -1,18 +1,18 @@
 import { config } from '@creditkarma/dynamic-config'
 import * as logger from './logger'
 import { DEFAULT_TOGGLES_PATH } from './constants'
-import { objectMatchesSchema } from './utils'
+import { objectMatchesSchema, memoize } from './utils'
 import { toggleSchema } from './schema'
 import {
-    DescMap,
+    ToggleMap,
     IToggleDescription,
     Toggle,
 } from './types'
 
-const rawToggles: DescMap = new Map()
+const rawToggles: ToggleMap = new Map()
 
-const futureToggles: Promise<DescMap> =
-    new Promise((resolve, reject) => {
+const lazyToggles: () => Promise<ToggleMap> = memoize(() => {
+    return new Promise((resolve, reject) => {
         config().watch<Array<IToggleDescription>>(DEFAULT_TOGGLES_PATH).onValue((toggles): void => {
             if (objectMatchesSchema(toggleSchema, { toggles })) {
                 toggles.forEach((next: IToggleDescription) => {
@@ -27,12 +27,13 @@ const futureToggles: Promise<DescMap> =
             }
         })
     })
+})
 
-export function ToggleMap(key: string): Promise<Toggle> {
-    return futureToggles.then((map: DescMap) => {
+export function toggleMap(key: string): Promise<Toggle> {
+    return lazyToggles().then((map: ToggleMap) => {
         return () => {
-            if (rawToggles.has(key)) {
-                const toggleDesc: IToggleDescription = rawToggles.get(key)!
+            if (map.has(key)) {
+                const toggleDesc: IToggleDescription = map.get(key)!
                 const randomInt: number = Math.random()
                 return (randomInt < toggleDesc.fraction)
 

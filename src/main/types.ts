@@ -1,4 +1,4 @@
-export type DescMap = Map<string, IToggleDescription>
+export type ToggleMap = Map<string, IToggleDescription>
 
 export interface IToggleDescription {
     id: string
