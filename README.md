@@ -59,13 +59,19 @@ The real work of the feature flag is actually the configuration. In your applica
 }
 ```
 
+Each `Toggle` must have an `id` and a `fraction`, the number indicating how often to return `true`. The `fraction` is a number from `0.0` to `1.0`. So in the example the value `0.1` indicates that this `Toggle` will be `true` 10% of the time it is called.
+
 ### Dynamic Config
 
 [DynamicConfig](https://github.com/creditkarma/dynamic-config) is a pluggable config library for Node.js that allows for runtime changes to config values. This is the basis for our feature flags support. It certainly isn't required that you use Dyanmic Config for all of your application config, but that would be recommended.
 
+You should check out the docs for DynamicConifg if you are going to use this library. The gist is this. DynamicConfig has plugable support for remote data stores for configuration values. These external data stores can have their values updated without having to restart the application. The feature flags library will be updated if the remote values change and the ramp of your toggles will be updated in real time.
 
+The only time there is a performance penalty for loading the external config is during the creation of a `Toggle`. After this initial penalty updated values are loaded in the background.
 
 ### Flag Schema
+
+The schema for the `toggles` config:
 
 ```json
 {
@@ -86,11 +92,11 @@ The real work of the feature flag is actually the configuration. In your applica
                     "fraction": {
                         "type": "number",
                         "minimum": 0.0,
-                        "maximum": 1.0,
-                        "exclusiveMinimum": false,
-                        "exclusiveMaxmimum": false
+                        "maximum": 1.0
                     },
-                    "comment": { "type": "string" }
+                    "comment": {
+                        "type": "string"
+                    }
                 },
                 "required": [ "id", "fraction" ]
             }
@@ -99,3 +105,12 @@ The real work of the feature flag is actually the configuration. In your applica
     "required": [ "toggles" ]
 }
 ```
+
+## Contributing
+
+For more information about contributing new features and bug fixes, see our [Contribution Guidelines](https://github.com/creditkarma/CONTRIBUTING.md).
+External contributors must sign Contributor License Agreement (CLA)
+
+## License
+
+This project is licensed under [Apache License Version 2.0](./LICENSE)
