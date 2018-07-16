@@ -9,20 +9,20 @@ setTimeout(() => {
     Promise.all([
         consulClient.set({ path: 'toggles' }, [
             {
-                "id": "com.creditkarma.featureFlags.AlwaysEnabled",
-                "description": "It's a feature toggle",
-                "fraction": 1.0
+                id: 'com.creditkarma.featureFlags.AlwaysEnabled',
+                description: "It's a feature toggle",
+                fraction: 1.0,
             },
             {
-                "id": "com.creditkarma.featureFlags.AlwaysDisabled",
-                "description": "It's a feature toggle",
-                "fraction": 0
+                id: 'com.creditkarma.featureFlags.AlwaysDisabled',
+                description: "It's a feature toggle",
+                fraction: 0,
             },
             {
-                "id": "com.creditkarma.featureFlags.SometimesDisabled",
-                "description": "It's a feature toggle",
-                "fraction": 0.4
-            }
+                id: 'com.creditkarma.featureFlags.SometimesDisabled',
+                description: "It's a feature toggle",
+                fraction: 0.4,
+            },
         ]),
     ]).then(
         (result: any) => {

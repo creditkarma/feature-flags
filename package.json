@@ -10,9 +10,10 @@
   "scripts": {
     "clean": "rimraf dist/",
     "clean-all": "rimraf dist/ node_modules/ package-lock.json",
+    "lint": "tslint --fix './src/**/*.ts'",
     "docker": "docker-compose up --force-recreate &",
     "docker:kill": "docker-compose kill",
-    "prebuild": "npm run clean",
+    "prebuild": "npm run clean && npm run lint",
     "build": "tsc",
     "precopy-test-config": "rimraf dist/tests/integration/config",
     "copy-test-config": "cp -r src/tests/integration/config dist/tests/integration/config",
@@ -20,7 +21,11 @@
     "test": "npm run test:integration",
     "pretest:integration": "npm run docker",
     "test:integration": "wait-on --timeout 20000 http://localhost:8510 && node dist/tests/integration/bootstrap.js && CONSUL_ADDRESS='http://localhost:8510' CONSUL_DC='dc1' CONFIG_PATH='dist/tests/integration/config' lab --timeout 15000 --verbose -l -S -P spec dist/tests/integration",
-    "posttest:integration": "npm run docker:kill"
+    "posttest:integration": "npm run docker:kill",
+    "release:patch": "npm version patch && npm run release:publish",
+    "release:minor": "npm version minor && npm run release:publish",
+    "release:major": "npm version major && npm run release:publish",
+    "release:publish": "git push --follow-tags"
   },
   "author": "Credit Karma",
   "license": "Apache-2.0",

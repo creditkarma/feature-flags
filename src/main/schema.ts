@@ -7,23 +7,23 @@ export const toggleSchema: object = {
                 type: 'object',
                 properties: {
                     id: {
-                        type: 'string'
+                        type: 'string',
                     },
                     description: {
-                        type: 'string'
+                        type: 'string',
                     },
                     fraction: {
                         type: 'number',
                         minimum: 0.0,
-                        maximum: 1.0
+                        maximum: 1.0,
                     },
                     comment: {
-                        type: 'string'
-                    }
+                        type: 'string',
+                    },
                 },
-                required: [ 'id', 'fraction' ]
-            }
-        }
+                required: [ 'id', 'fraction' ],
+            },
+        },
     },
-    required: [ 'toggles' ]
+    required: [ 'toggles' ],
 }

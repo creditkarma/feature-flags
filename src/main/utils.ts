@@ -7,7 +7,7 @@ export function objectMatchesSchema(schema: object, data: any): boolean {
 }
 
 export function memoize<T>(fn: () => T): () => T {
-    let cachedValue: any = undefined
+    let cachedValue: any
 
     return (): T => {
         if (cachedValue !== undefined) {

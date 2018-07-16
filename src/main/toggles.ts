@@ -1,13 +1,13 @@
 import { config } from '@creditkarma/dynamic-config'
-import * as logger from './logger'
 import { DEFAULT_TOGGLES_PATH } from './constants'
-import { objectMatchesSchema, memoize } from './utils'
+import * as logger from './logger'
 import { toggleSchema } from './schema'
 import {
-    ToggleMap,
     IToggleDescription,
     Toggle,
+    ToggleMap,
 } from './types'
+import { memoize, objectMatchesSchema } from './utils'
 
 const rawToggles: ToggleMap = new Map()
 
