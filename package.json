@@ -2,7 +2,11 @@
   "name": "@creditkarma/feature-flags",
   "version": "0.0.0",
   "description": "A dynamic feature flags library for Node.js",
-  "main": "index.js",
+  "main": "dist/main/index.js",
+  "types": "dist/main/index.ts",
+  "files": [
+    "dist/main"
+  ],
   "scripts": {
     "clean": "rimraf dist/",
     "clean-all": "rimraf dist/ node_modules/ package-lock.json",
