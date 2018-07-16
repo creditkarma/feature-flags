@@ -20,8 +20,11 @@
   },
   "author": "Credit Karma",
   "license": "Apache-2.0",
+  "peerDependencies": {
+    "@creditkarma/dynamic-config": ">=0.7.0 <0.8.0"
+  },
   "devDependencies": {
-    "@creditkarma/dynamic-config": "^0.7.1",
+    "@creditkarma/dynamic-config": "^0.7.2",
     "@types/code": "^4.0.4",
     "@types/lab": "^11.1.0",
     "code": "^4.1.0",
