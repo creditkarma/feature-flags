@@ -4,7 +4,7 @@ import { KvStore } from '@creditkarma/consul-client'
 process.chdir(__dirname)
 
 setTimeout(() => {
-    const consulClient: KvStore = new KvStore('http://localhost:8510')
+    const consulClient: KvStore = new KvStore([ 'http://localhost:8510' ])
 
     Promise.all([
         consulClient.set({ path: 'toggles' }, [
@@ -25,7 +25,7 @@ setTimeout(() => {
             },
         ]),
     ]).then(
-        (result: any) => {
+        () => {
             console.log('Done populating mock data')
         },
         (failure: any) => {
