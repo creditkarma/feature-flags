@@ -35,9 +35,9 @@ executorType: machine
 jobs:
   test_node_8:
     <<: *defaults
-    - *install_node_8
     steps:
       - checkout
+      - *install_node_8
       - run:
           name: Install NPM Dependencies
           command: npm install
