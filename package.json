@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist/",
-    "clean-all": "rimraf dist/ node_modules/ package-lock.json",
+    "clean:all": "rimraf dist/ node_modules/ package-lock.json",
     "lint": "tslint --fix './src/**/*.ts'",
     "docker": "docker-compose up --force-recreate &",
     "docker:kill": "docker-compose kill",
@@ -33,17 +33,17 @@
     "@creditkarma/dynamic-config": ">=0.7.0 <0.10.0"
   },
   "devDependencies": {
-    "@creditkarma/dynamic-config": "^0.9.0",
-    "@types/code": "^4.0.4",
-    "@types/lab": "^11.1.0",
-    "code": "^4.1.0",
-    "lab": "^14.3.1",
+    "@creditkarma/dynamic-config": "^0.9.7",
+    "@creditkarma/consul-client": "^0.8.4",
+    "@hapi/code": "^5.3.1",
+    "@hapi/lab": "^19.0.1",
+    "@types/hapi__code": "^5.3.0",
     "rimraf": "^2.6.2",
-    "tslint": "^5.11.0",
-    "typescript": "3.1.x",
-    "wait-on": "^3.1.0"
+    "tslint": "^5.17.0",
+    "typescript": "3.5.x",
+    "wait-on": "^3.2.0"
   },
   "dependencies": {
-    "ajv": "^6.5.4"
+    "ajv": "^6.10.0"
   }
 }

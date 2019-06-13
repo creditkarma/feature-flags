@@ -5,26 +5,26 @@ function isDebug(): boolean {
     )
 }
 
-export const log = (msg: string, data?: any) => {
-    if (data !== undefined && isDebug()) {
-        console.log(`[feature-flags:info]: ${msg}: `, data)
-    } else if (isDebug()) {
-        console.log(`[feature-flags:info]: ${msg}`)
-    }
-}
+export type LogFunction = (tags: Array<string>, data?: string | object) => void
 
-export const warn = (msg: string, data?: any) => {
-    if (data !== undefined && isDebug()) {
-        console.warn(`[feature-flags:warn]: ${msg}: `, data)
+export const defaultLogger: LogFunction = (tags: Array<string>, data?: string | object): void => {
+    if (tags.includes('error')) {
+        if (data !== undefined) {
+            console.error(`[${tags.join(',')}]: `, data)
+        } else {
+            console.error(`[${tags.join(',')}]`)
+        }
+    } else if (tags.includes('warn')) {
+        if (data !== undefined) {
+            console.warn(`[${tags.join(',')}]: `, data)
+        } else {
+            console.warn(`[${tags.join(',')}]`)
+        }
     } else if (isDebug()) {
-        console.warn(`[feature-flags:warn]: ${msg}`)
-    }
-}
-
-export const error = (msg: string, data?: any) => {
-    if (data !== undefined) {
-        console.error(`[feature-flags:error]: ${msg}: `, data)
-    } else {
-        console.error(`[feature-flags:error]: ${msg}`)
+        if (data !== undefined) {
+            console.log(`[${tags.join(',')}]: `, data)
+        } else {
+            console.log(`[${tags.join(',')}]`)
+        }
     }
 }

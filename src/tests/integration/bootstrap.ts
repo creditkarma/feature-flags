@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 import { KvStore } from '@creditkarma/consul-client'
+import { CONSUL_ADDRESS } from './constants'
 
 process.chdir(__dirname)
 
 setTimeout(() => {
-    const consulClient: KvStore = new KvStore([ 'http://localhost:8510' ])
+    const consulClient: KvStore = new KvStore([ CONSUL_ADDRESS ])
 
     Promise.all([
         consulClient.set({ path: 'toggles' }, [
