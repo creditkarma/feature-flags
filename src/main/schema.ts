@@ -1,29 +1,19 @@
 export const toggleSchema: object = {
     type: 'object',
-    properties: {
-        toggles: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                    },
-                    description: {
-                        type: 'string',
-                    },
-                    fraction: {
-                        type: 'number',
-                        minimum: 0.0,
-                        maximum: 1.0,
-                    },
-                    comment: {
-                        type: 'string',
-                    },
+    patternProperties: {
+        '^[A-Za-z0-9 -_.]': {
+            type: 'object',
+            properties: {
+                fraction: {
+                    type: 'number',
+                    minimum: 0.0,
+                    maximum: 1.0,
                 },
-                required: [ 'id', 'fraction' ],
+                type: {
+                    type: 'string',
+                },
             },
+            required: [ 'type', 'fraction' ],
         },
     },
-    required: [ 'toggles' ],
 }
