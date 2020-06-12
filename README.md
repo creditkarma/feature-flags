@@ -81,7 +81,7 @@ The schema for the `toggles` config:
         "toggles": {
             "type": "object",
             "patternProperties": {
-                "^[A-Za-z0-9 -_.]": {
+                "[A-Za-z0-9 -_.]+": {
                     "type": "object",
                     "properties": {
                         "fraction": {

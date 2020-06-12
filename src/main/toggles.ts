@@ -23,9 +23,7 @@ const lazyToggles: (togglePath: string) => Promise<ToggleMap> = memoize<string, 
                         rawToggles.set(key, toggles[key])
                     }
                 })
-                resolve(Promise.resolve(rawToggles))
-
-                resolve(Promise.resolve(rawToggles))
+                resolve(rawToggles)
 
             } else {
                 defaultLogger(['error', 'toggleMap'], `Value of 'toggles' should be an object`)
