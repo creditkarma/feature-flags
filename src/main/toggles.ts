@@ -5,6 +5,7 @@ import { toggleSchema } from './schema'
 
 import {
     IToggleDescription,
+    IToggleDetails,
     Toggle,
     ToggleMap,
 } from './types'
@@ -13,36 +14,35 @@ import { memoize, objectMatchesSchema } from './utils'
 
 const rawToggles: ToggleMap = new Map()
 
-const lazyToggles: () => Promise<ToggleMap> = memoize(() => {
+const lazyToggles: (togglePath: string) => Promise<ToggleMap> = memoize<string, Promise<ToggleMap>>((togglePath: string) => {
     return new Promise((resolve, reject) => {
-        config().watch<Array<IToggleDescription>>(DEFAULT_TOGGLES_PATH).onValue((toggles): void => {
-            if (objectMatchesSchema(toggleSchema, { toggles })) {
-                toggles.forEach((next: IToggleDescription) => {
-                    rawToggles.set(next.id, next)
+        config().watch<IToggleDescription>(togglePath).onValue(({toggles}): void => {
+            if (objectMatchesSchema(toggleSchema, toggles)) {
+                Object.keys(toggles).forEach((key) => {
+                    if (toggles[key]) {
+                        rawToggles.set(key, toggles[key])
+                    }
                 })
-
-                resolve(Promise.resolve(rawToggles))
+                resolve(rawToggles)
 
             } else {
-                defaultLogger(['error', 'toggleMap'], `Value of 'toggles' should be an array`)
-                reject(new Error(`Value of 'toggles' should be an array`))
+                defaultLogger(['error', 'toggleMap'], `Value of 'toggles' should be an object`)
+                reject(new Error(`Value of 'toggles' should be an object`))
             }
         })
     })
 })
 
-export function toggleMap(key: string): Promise<Toggle> {
-    return lazyToggles().then((map: ToggleMap) => {
+const defaultFallbackToggle: IToggleDetails = {
+    type: 'BOOL',
+    fraction: 0.0,
+}
+export function toggleMap(key: string, togglePath: string = DEFAULT_TOGGLES_PATH, fallbackToggle: IToggleDetails = defaultFallbackToggle): Promise<Toggle> {
+    return lazyToggles(togglePath).then((map: ToggleMap) => {
         return () => {
-            if (map.has(key)) {
-                const toggleDesc: IToggleDescription = map.get(key)!
-                const randomInt: number = Math.random()
-                return (randomInt < toggleDesc.fraction)
-
-            } else {
-                defaultLogger(['warn', 'toggleMap'], `There is no toggle for key[${key}]. Defaults to false`)
-                return false
-            }
+            const toggleDesc: IToggleDetails = map.get(key) || fallbackToggle
+            const randomInt: number = Math.random()
+            return (randomInt < toggleDesc.fraction)
         }
     })
 }

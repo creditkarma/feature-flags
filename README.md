@@ -49,13 +49,13 @@ The real work of the feature flag is actually the configuration. In your applica
 
 ```json
 {
-    "toggles": [
-        {
-            "id": "com.example.service.UseNewBackend",
+    "toggles": {
+        "com.example.service.UseNewBackend" : {
             "description": "Use new backend code",
             "fraction": 0.1,
+            "type": "RAMP",
         }
-    ]
+    }
 }
 ```
 
@@ -79,26 +79,25 @@ The schema for the `toggles` config:
     "type": "object",
     "properties": {
         "toggles": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
+            "type": "object",
+            "patternProperties": {
+                "[A-Za-z0-9 -_.]+": {
+                    "type": "object",
+                    "properties": {
+                        "fraction": {
+                            "type": "number",
+                            "minimum": 0.0,
+                            "maximum": 1.0,
+                        },
+                        "type": {
+                            "type": "string",
+                        },
+                        "description": {
+                            "type": "string",
+                        },
                     },
-                    "description": {
-                        "type": "string"
-                    },
-                    "fraction": {
-                        "type": "number",
-                        "minimum": 0.0,
-                        "maximum": 1.0
-                    },
-                    "comment": {
-                        "type": "string"
-                    }
+                    "required": [ "type", "fraction" ],
                 },
-                "required": [ "id", "fraction" ]
             }
         }
     },

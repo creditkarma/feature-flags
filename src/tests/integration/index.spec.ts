@@ -33,23 +33,25 @@ describe('ToggleMap', () => {
     })
 
     it('should respond to dynamic updates', async () => {
-        await consulClient.set({ path: 'toggles' }, [
-            {
-                id: 'com.creditkarma.featureFlags.AlwaysEnabled',
-                description: "It's a feature toggle",
-                fraction: 0,
+        await consulClient.set({ path: 'toggles' }, {
+            toggles: {
+                'com.creditkarma.featureFlags.AlwaysEnabled' : {
+                    description: "It's a feature toggle",
+                    fraction: 0,
+                    type: 'BOOL',
+                },
+                'com.creditkarma.featureFlags.AlwaysDisabled' : {
+                    description: "It's a feature toggle",
+                    fraction: 1.0,
+                    type: 'BOOL',
+                },
+                'com.creditkarma.featureFlags.SometimesDisabled' : {
+                    description: "It's a feature toggle",
+                    fraction: 0.4,
+                    type: 'RAMP',
+                },
             },
-            {
-                id: 'com.creditkarma.featureFlags.AlwaysDisabled',
-                description: "It's a feature toggle",
-                fraction: 1.0,
-            },
-            {
-                id: 'com.creditkarma.featureFlags.SometimesDisabled',
-                description: "It's a feature toggle",
-                fraction: 0.4,
-            },
-        ])
+        })
 
         await delay()
 
