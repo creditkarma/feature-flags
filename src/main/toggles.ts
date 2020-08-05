@@ -26,7 +26,7 @@ const lazyToggles: (togglePath: string) => Promise<ToggleMap> = memoize<string, 
                 resolve(rawToggles)
 
             } else {
-                if(toggles !== undefined) {
+                if (toggles !== undefined) {
                     defaultLogger(['error', 'toggleMap'], `Value of 'toggles' should be an object`)
                     reject(new Error(`Value of 'toggles' should be an object`))
                 } else {
