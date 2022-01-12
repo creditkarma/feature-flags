@@ -32,6 +32,17 @@ describe('ToggleMap', () => {
         expect(toggle()).to.equal(true)
     })
 
+    it('should respond to toggle removals', async () => {
+        await consulClient.set({ path: 'toggles' }, {
+            toggles: { },
+        })
+
+        await delay()
+
+        const postToggle = await toggleMap('com.creditkarma.featureFlags.AlwaysEnabled')
+        expect(postToggle()).to.equal(false)
+    })
+
     it('should respond to dynamic updates', async () => {
         await consulClient.set({ path: 'toggles' }, {
             toggles: {
