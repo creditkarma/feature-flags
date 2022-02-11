@@ -1,0 +1,9 @@
+{
+    "toggles": {
+        "com.creditkarma.featureFlags.AlwaysDefault": {
+            "description": "This value is never set in consul and should lways default to true",
+            "fraction": 1.0,
+            "type": "BOOL"
+        }
+    }
+}
