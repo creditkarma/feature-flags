@@ -3,5 +3,10 @@
         "_source": "consul",
         "_key": "toggles",
         "_default": {}
+    },
+    "invalid": {
+        "_source": "consul",
+        "_key": "invalid",
+        "_default": {}
     }
 }
