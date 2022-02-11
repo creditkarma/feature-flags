@@ -22,6 +22,11 @@ function delay(time: number = 3000): Promise<void> {
 }
 
 describe('ToggleMap', () => {
+    it('should return undefined for toggles that are not set', async () => {
+        const toggle = await toggleMap('com.creditkarma.featureFlags.NeverSet')
+        expect(toggle()).to.equal(false)
+    })
+    
     it('should return false for toggle set to 0.0', async () => {
         const toggle = await toggleMap('com.creditkarma.featureFlags.AlwaysDisabled')
         expect(toggle()).to.equal(false)
