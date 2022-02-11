@@ -19,6 +19,8 @@ const lazyToggles: (togglePath: string) => Promise<ToggleMap> = memoize<string, 
         config().watch<IToggleDescription>(togglePath).onValue(({toggles}): void => {
             defaultLogger(['info', 'toggleMap'], `Remote toggle values have been updated`)
             if (objectMatchesSchema(toggleSchema, toggles)) {
+                console.log(JSON.stringify(rawToggles))
+                console.log(JSON.stringify(toggles))
                 rawToggles.clear()
                 Object.keys(toggles).forEach((key) => {
                     if (toggles[key]) {

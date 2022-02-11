@@ -21,16 +21,10 @@ function delay(time: number = 3000): Promise<void> {
     })
 }
 
-process.env.ENV_VAR_MISSING='test'
-
 describe('ToggleMap', () => {
     it('should return undefined for toggles that are not set', async () => {
         const toggle = await toggleMap('com.creditkarma.featureFlags.NeverSet')
         expect(toggle()).to.equal(false)
-    })
-    it('should return default for toggles that are not set but configured in toggles.json', async () => {
-        const toggle = await toggleMap('com.creditkarma.featureFlags.AlwaysDefault')
-        expect(toggle()).to.equal(true)
     })
 
     it('should return false for toggle set to 0.0', async () => {

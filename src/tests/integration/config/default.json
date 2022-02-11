@@ -1,6 +1,7 @@
 {
     "toggles": {
         "_source": "consul",
-        "_key": "toggles"
+        "_key": "toggles",
+        "_default": {}
     }
 }
