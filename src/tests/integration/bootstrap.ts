@@ -6,7 +6,6 @@ process.chdir(__dirname)
 
 setTimeout(() => {
     const consulClient: KvStore = new KvStore([ CONSUL_ADDRESS ])
-
     Promise.all([
         consulClient.set({ path: 'toggles' }, {
             toggles: {
