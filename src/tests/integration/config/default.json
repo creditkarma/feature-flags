@@ -1,6 +1,6 @@
 {
     "toggles": {
         "_source": "consul",
-        "_key": "toggles"
+        "_key": "toggles/${ENV_VAR_MISSING||fake}/values"
     }
 }
