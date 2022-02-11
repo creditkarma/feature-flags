@@ -6,9 +6,8 @@ process.chdir(__dirname)
 
 setTimeout(() => {
     const consulClient: KvStore = new KvStore([ CONSUL_ADDRESS ])
-
     Promise.all([
-        consulClient.set({ path: 'toggles' }, {
+        consulClient.set({ path: 'toggles/test/values' }, {
             toggles: {
                 'com.creditkarma.featureFlags.AlwaysEnabled' : {
                     description: "It's a feature toggle",
