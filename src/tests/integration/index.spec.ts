@@ -28,7 +28,7 @@ describe('ToggleMap', () => {
         const toggle = await toggleMap('com.creditkarma.featureFlags.NeverSet')
         expect(toggle()).to.equal(false)
     })
-    it('should return undefined for toggles that are not set', async () => {
+    it('should return default for toggles that are not set but configured in toggles.json', async () => {
         const toggle = await toggleMap('com.creditkarma.featureFlags.AlwaysDefault')
         expect(toggle()).to.equal(true)
     })
