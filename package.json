@@ -1,6 +1,6 @@
 {
   "name": "@creditkarma/feature-flags",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A dynamic feature flags library for Node.js",
   "main": "dist/main/index.js",
   "types": "dist/main/index.d.ts",
