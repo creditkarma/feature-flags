@@ -2,30 +2,16 @@ defaults: &defaults
   working_directory: ~/feature-flags
 
 helpers:
-  install_node_8: &install_node_8
+  install_node_16: &install_node_16
     run:
-      name: Install Node 8
+      name: Install Node 16
       command: |
         set +e
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
         export NVM_DIR="/opt/circleci/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        nvm install 8
-        nvm alias default 8
-        # Each step uses the same `$BASH_ENV`, so need to modify it
-        echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
-        echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
-
-  install_node_10: &install_node_10
-    run:
-      name: Install Node 10
-      command: |
-        set +e
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
-        export NVM_DIR="/opt/circleci/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        nvm install 10
-        nvm alias default 10
+        nvm install 16
+        nvm alias default 16
         # Each step uses the same `$BASH_ENV`, so need to modify it
         echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
         echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
@@ -33,23 +19,11 @@ helpers:
 version: 2
 executorType: machine
 jobs:
-  test_node_8:
+  test_node_16:
     <<: *defaults
     steps:
       - checkout
-      - *install_node_8
-      - run:
-          name: Install NPM Dependencies
-          command: npm install
-      - run:
-          name: Run Test Suite
-          command: npm test
-
-  test_node_10:
-    <<: *defaults
-    steps:
-      - checkout
-      - *install_node_10
+      - *install_node_16
       - run:
           name: Install NPM Dependencies
           command: npm install
@@ -61,7 +35,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - *install_node_8
+      - *install_node_16
       - run:
           name: Generate .npmrc File
           command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
@@ -79,7 +53,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - *install_node_8
+      - *install_node_16
       - run:
           name: Generate .npmrc File
           command: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
@@ -97,20 +71,14 @@ workflows:
   version: 2
   build_publish:
       jobs:
-        - test_node_8:
-            filters:
-              tags:
-                only: /.*/
-
-        - test_node_10:
+        - test_node_16:
             filters:
               tags:
                 only: /.*/
 
         - publish:
             requires:
-              - test_node_8
-              - test_node_10
+              - test_node_16
             filters:
               tags:
                 only: /^(v){1}[0-9]+(\.[0-9]+){2}$/
@@ -119,8 +87,7 @@ workflows:
 
         - publish_next:
             requires:
-              - test_node_8
-              - test_node_10
+              - test_node_16
             filters:
               tags:
                 only: /^(v){1}[0-9]+(\.[0-9]+){2}(-)[0-9]+$/
