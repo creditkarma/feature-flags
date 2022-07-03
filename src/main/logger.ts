@@ -4,7 +4,7 @@ function isDebug(): boolean {
         process.env.DEBUG === 'true'
     )
 }
-
+// a
 export type LogFunction = (tags: Array<string>, data?: string | object) => void
 
 export const defaultLogger: LogFunction = (tags: Array<string>, data?: string | object): void => {
