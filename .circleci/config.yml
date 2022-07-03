@@ -1,6 +1,6 @@
 defaults: &defaults
   working_directory: ~/feature-flags
-  parallelism: 1
+  parallelism: 2
 
 helpers:
   install_node_16: &install_node_16
