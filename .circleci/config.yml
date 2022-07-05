@@ -1,5 +1,7 @@
 defaults: &defaults
   working_directory: ~/feature-flags
+  machine:
+    image: ubuntu-2004:202201-02
 
 helpers:
   install_node_16: &install_node_16
@@ -17,7 +19,6 @@ helpers:
         echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
 
 version: 2
-executorType: machine
 jobs:
   test_node_16:
     <<: *defaults
