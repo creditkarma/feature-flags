@@ -1,6 +1,8 @@
 defaults: &defaults
   working_directory: ~/feature-flags
   parallelism: 2
+  machine:
+    image: circleci/classic:201709-01
 
 helpers:
   install_node_16: &install_node_16
@@ -18,7 +20,6 @@ helpers:
         echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
 
 version: 2
-executorType: machine
 jobs:
   test_node_16:
     <<: *defaults
