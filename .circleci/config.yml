@@ -2,7 +2,7 @@ defaults: &defaults
   working_directory: ~/feature-flags
   parallelism: 2
   machine:
-    image: circleci/classic:201709-01
+    image: ubuntu-2004:202201-02
 
 helpers:
   install_node_16: &install_node_16
